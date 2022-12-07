@@ -9,6 +9,24 @@
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
+    <Filter Include="Header Files\demo">
+      <UniqueIdentifier>{ee1eaf83-acc4-4c0e-88fd-708b16ec2cf4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\demo\math">
+      <UniqueIdentifier>{ab0e4fd8-62bc-4dfa-81b7-2c424abae72f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\demo\math\internal">
+      <UniqueIdentifier>{801cb89f-63ac-4c80-86e0-43919cf339ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\demo">
+      <UniqueIdentifier>{12ee941a-8a1d-450b-86cf-46526dd263ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\demo\math">
+      <UniqueIdentifier>{8d713931-0d9a-45b1-991a-b8669b706288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\demo\math\internal">
+      <UniqueIdentifier>{d10e42a1-9a55-45c0-92ad-083ac66bce44}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main.cpp">
