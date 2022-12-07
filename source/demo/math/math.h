@@ -1,7 +1,7 @@
 #pragma once
 
 
-// Most fundamental external stuff.
+// Most fundamental dependencies.
 #include <cstdint>
 #include <cmath>
 
@@ -9,8 +9,10 @@
 // Namespace definition.
 namespace Demo
 {
+// Math subsystem.
 inline namespace Math
 {
+// Internal stuff for math.
 namespace Internal
 {
 
