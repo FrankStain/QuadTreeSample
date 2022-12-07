@@ -25,6 +25,7 @@ namespace Internal
 #include "internal/forwards.h"
 
 // Internal definitions.
+#include "internal/Point.h"
 
 // Public definitions.
 
