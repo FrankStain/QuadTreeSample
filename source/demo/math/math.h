@@ -2,6 +2,8 @@
 
 
 // Most fundamental external stuff.
+#include <cstdint>
+#include <cmath>
 
 
 // Namespace definition.
@@ -16,8 +18,6 @@ namespace Internal
 }
 }
 
-
-// Fundamental internal definitions.
 
 // Public definitions.
 #include "Vector2f.h"
