@@ -23,3 +23,4 @@ namespace Internal
 #include "Vector2f.h"
 
 // Deferred inline definitions.
+#include "Vector2f.inl"
