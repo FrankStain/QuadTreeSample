@@ -2,9 +2,6 @@
 #include <demo/math/math.h>
 
 
-class Shape;
-struct Quad;
-
 class Point final
 {
 public:

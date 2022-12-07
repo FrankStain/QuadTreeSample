@@ -22,6 +22,7 @@ namespace Internal
 
 // Most fundamental declarations.
 #include "forwards.h"
+#include "internal/forwards.h"
 
 // Internal definitions.
 
