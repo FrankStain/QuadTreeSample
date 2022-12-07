@@ -26,6 +26,7 @@ namespace Internal
 
 // Internal definitions.
 #include "internal/Point.h"
+#include "internal/Shape.h"
 
 // Public definitions.
 
