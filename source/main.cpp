@@ -4,7 +4,6 @@
 
 class Shape;
 struct Quad;
-class QuadTree;
 
 class Point final
 {
