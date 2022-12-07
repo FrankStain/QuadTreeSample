@@ -24,6 +24,7 @@ namespace Internal
 #include "BoundingRect.h"
 
 // Deferred inline definitions.
+#include "BoundingRect.inl"
 #include "Vector2f.inl"
 
 #include "Vector2f.operations.inl"
