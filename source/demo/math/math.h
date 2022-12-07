@@ -24,3 +24,5 @@ namespace Internal
 
 // Deferred inline definitions.
 #include "Vector2f.inl"
+
+#include "Vector2f.operations.inl"
