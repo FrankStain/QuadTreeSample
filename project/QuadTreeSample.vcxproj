@@ -180,6 +180,7 @@
     <ClCompile Include="..\source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\demo\math\math.h" />
     <ClInclude Include="..\source\main.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

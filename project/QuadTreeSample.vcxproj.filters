@@ -37,5 +37,8 @@
     <ClInclude Include="..\source\main.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\demo\math\math.h">
+      <Filter>Header Files\demo\math</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
