@@ -21,6 +21,7 @@ namespace Internal
 
 // Public definitions.
 #include "Vector2f.h"
+#include "BoundingRect.h"
 
 // Deferred inline definitions.
 #include "Vector2f.inl"
