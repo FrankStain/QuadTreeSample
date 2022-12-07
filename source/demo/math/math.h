@@ -20,5 +20,6 @@ namespace Internal
 // Fundamental internal definitions.
 
 // Public definitions.
+#include "Vector2f.h"
 
 // Deferred inline definitions.
