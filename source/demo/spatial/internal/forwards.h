@@ -6,8 +6,9 @@ inline namespace Spatial
 {
 namespace Internal
 {
-	// Allow the referencing from points to shape.
+	class Point;
 	class Shape;
+	struct Quad;
 }
 }
 }
