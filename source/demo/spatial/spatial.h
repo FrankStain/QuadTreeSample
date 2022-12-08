@@ -44,5 +44,6 @@ namespace Internal
 #include "internal/QuadProvider.h"
 
 // Public definitions.
+#include "QuadTree.h"
 
 // Deferred inline definitions.
