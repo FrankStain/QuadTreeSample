@@ -177,11 +177,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\demo\spatial\internal\QuadProvider.cpp" />
+    <ClCompile Include="..\source\demo\spatial\internal\Shape.cpp" />
+    <ClCompile Include="..\source\demo\spatial\internal\ShapeProvider.cpp" />
+    <ClCompile Include="..\source\demo\spatial\QuadTree.cpp" />
     <ClCompile Include="..\source\main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\source\demo\math\BoundingRect.h" />
     <ClInclude Include="..\source\demo\math\math.h" />
+    <ClInclude Include="..\source\demo\math\Vector2f.h" />
+    <ClInclude Include="..\source\demo\spatial\forwards.h" />
+    <ClInclude Include="..\source\demo\spatial\internal\aliases.h" />
+    <ClInclude Include="..\source\demo\spatial\internal\forwards.h" />
+    <ClInclude Include="..\source\demo\spatial\internal\Point.h" />
+    <ClInclude Include="..\source\demo\spatial\internal\QuadProvider.h" />
+    <ClInclude Include="..\source\demo\spatial\internal\Shape.h" />
+    <ClInclude Include="..\source\demo\spatial\internal\ShapeProvider.h" />
+    <ClInclude Include="..\source\demo\spatial\internal\structures.h" />
+    <ClInclude Include="..\source\demo\spatial\QuadTree.h" />
+    <ClInclude Include="..\source\demo\spatial\spatial.h" />
     <ClInclude Include="..\source\main.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\source\demo\math\BoundingRect.inl" />
+    <None Include="..\source\demo\math\Vector2f.inl" />
+    <None Include="..\source\demo\math\Vector2f.operations.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

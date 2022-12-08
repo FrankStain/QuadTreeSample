@@ -15,22 +15,37 @@
     <Filter Include="Header Files\demo\math">
       <UniqueIdentifier>{ab0e4fd8-62bc-4dfa-81b7-2c424abae72f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\demo\math\internal">
-      <UniqueIdentifier>{801cb89f-63ac-4c80-86e0-43919cf339ec}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\demo">
       <UniqueIdentifier>{12ee941a-8a1d-450b-86cf-46526dd263ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\demo\math">
-      <UniqueIdentifier>{8d713931-0d9a-45b1-991a-b8669b706288}</UniqueIdentifier>
+    <Filter Include="Header Files\demo\spatial">
+      <UniqueIdentifier>{043ce739-499b-48cd-b759-aa4778f7e4ae}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\demo\math\internal">
-      <UniqueIdentifier>{d10e42a1-9a55-45c0-92ad-083ac66bce44}</UniqueIdentifier>
+    <Filter Include="Source Files\demo\spatial">
+      <UniqueIdentifier>{53c1a2a0-ceb1-4c1e-a323-0c5ce7a66a6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\demo\spatial\internal">
+      <UniqueIdentifier>{649011ae-2281-4c1e-beb9-beb0936f97aa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\demo\spatial\internal">
+      <UniqueIdentifier>{f75b91cd-d98a-4372-a52d-97211c8c921b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\source\main.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\demo\spatial\QuadTree.cpp">
+      <Filter>Source Files\demo\spatial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\demo\spatial\internal\Shape.cpp">
+      <Filter>Source Files\demo\spatial\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\demo\spatial\internal\ShapeProvider.cpp">
+      <Filter>Source Files\demo\spatial\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\source\demo\spatial\internal\QuadProvider.cpp">
+      <Filter>Source Files\demo\spatial\internal</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -40,5 +55,52 @@
     <ClInclude Include="..\source\demo\math\math.h">
       <Filter>Header Files\demo\math</Filter>
     </ClInclude>
+    <ClInclude Include="..\source\demo\math\BoundingRect.h">
+      <Filter>Header Files\demo\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\math\Vector2f.h">
+      <Filter>Header Files\demo\math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\forwards.h">
+      <Filter>Header Files\demo\spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\spatial.h">
+      <Filter>Header Files\demo\spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\QuadTree.h">
+      <Filter>Header Files\demo\spatial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\internal\aliases.h">
+      <Filter>Header Files\demo\spatial\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\internal\forwards.h">
+      <Filter>Header Files\demo\spatial\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\internal\Point.h">
+      <Filter>Header Files\demo\spatial\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\internal\Shape.h">
+      <Filter>Header Files\demo\spatial\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\internal\structures.h">
+      <Filter>Header Files\demo\spatial\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\internal\QuadProvider.h">
+      <Filter>Header Files\demo\spatial\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\internal\ShapeProvider.h">
+      <Filter>Header Files\demo\spatial\internal</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\source\demo\math\BoundingRect.inl">
+      <Filter>Header Files\demo\math</Filter>
+    </None>
+    <None Include="..\source\demo\math\Vector2f.inl">
+      <Filter>Header Files\demo\math</Filter>
+    </None>
+    <None Include="..\source\demo\math\Vector2f.operations.inl">
+      <Filter>Header Files\demo\math</Filter>
+    </None>
   </ItemGroup>
 </Project>
