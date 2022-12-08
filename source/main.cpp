@@ -6,8 +6,7 @@
 
 
 
-using Points	= std::vector<const Point*>;
-using Quads		= std::array<std::shared_ptr<Quad>, 4>;
+
 using QuadState	= std::variant<Points, Quads>;
 
 
