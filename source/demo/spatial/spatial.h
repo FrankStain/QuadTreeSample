@@ -41,6 +41,7 @@ namespace Internal
 #include "internal/Shape.h"
 
 #include "internal/ShapeProvider.h"
+#include "internal/QuadProvider.h"
 
 // Public definitions.
 

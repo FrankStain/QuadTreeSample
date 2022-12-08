@@ -3,18 +3,6 @@
 #include <demo/spatial/spatial.h>
 
 
-class QuadProvider final
-{
-public:
-	std::shared_ptr<Quad> Create( const BoundingRect& bounds, const size_t level );
-
-private:
-	void Destroy( std::list<Quad>::iterator slot );
-
-private:
-	std::list<Quad>	m_slots;
-};
-
 std::shared_ptr<Quad> QuadProvider::Create( const BoundingRect& bounds, const size_t level )
 {
 	auto& quad = m_slots.emplace_back();
