@@ -31,6 +31,8 @@ namespace Internal
 #include "internal/Point.h"
 #include "internal/Shape.h"
 
+#include "internal/ShapeProvider.h"
+
 // Public definitions.
 
 // Deferred inline definitions.

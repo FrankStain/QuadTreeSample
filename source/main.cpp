@@ -3,16 +3,6 @@
 #include <demo/spatial/spatial.h>
 
 
-
-
-
-
-
-
-
-
-
-
 class ShapeProvider final
 {
 public:
