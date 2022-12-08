@@ -3,13 +3,19 @@
 #include <demo/spatial/spatial.h>
 
 
+namespace Demo
+{
+	using Spatial::Internal::Shape;
+}
+
+
 int main()
 {
 	const size_t shapes_count = 105;
 
-	QuadTree tree;
+	Demo::QuadTree tree;
 
-	std::vector<std::shared_ptr<Shape>> shapes;
+	std::vector<std::shared_ptr<Demo::Shape>> shapes;
 	shapes.reserve( shapes_count );
 
 	{
@@ -18,16 +24,16 @@ int main()
 
 		for( size_t index = 0; index < shapes_count; ++index )
 		{
-			const Vector2f center{
+			const Demo::Vector2f center{
 				float( 10.0 * ( random_distribution( randomizer ) - 0.5 ) ),
 				float( 10.0 * ( random_distribution( randomizer ) - 0.5 ) )
 			};
-			const Vector2f size{
+			const Demo::Vector2f size{
 				float( 6.0 * random_distribution( randomizer ) ),
 				float( 6.0 * random_distribution( randomizer ) )
 			};
 
-			shapes.emplace_back( tree.RetainShape( BoundingRect{ center }.Resize( size.Maximized( { 1.0f, 1.0f } ) * 0.5f ) ) );
+			shapes.emplace_back( tree.RetainShape( Demo::BoundingRect{ center }.Resize( size.Maximized( { 1.0f, 1.0f } ) * 0.5f ) ) );
 			shapes.back()->SetTag( index );
 		}
 	}
@@ -36,7 +42,7 @@ int main()
 		auto matches = tree.Find( { { 2.5f, 2.5f }, { 3.95f, 4.8f }, std::ignore } );
 	}
 
-	auto new_end = std::remove_if( shapes.begin(), shapes.end(), []( const std::shared_ptr<Shape>& shape ) { return ( shape->GetTag() & 1 ) != 0; } );
+	auto new_end = std::remove_if( shapes.begin(), shapes.end(), []( const std::shared_ptr<Demo::Shape>& shape ) { return ( shape->GetTag() & 1 ) != 0; } );
 	shapes.erase( new_end, shapes.end() );
 
 	{

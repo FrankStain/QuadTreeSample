@@ -11,7 +11,6 @@
 #include <memory>
 #include <optional>
 #include <variant>
-#include <utility>
 
 
 // Namespace definition.
