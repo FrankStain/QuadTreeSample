@@ -14,40 +14,40 @@ inline namespace Math
 		Vector2f	max;
 
 
-		friend void swap( BoundingRect& left, BoundingRect& right )	{ left.Swap( right ); };
+		inline friend void swap( BoundingRect& left, BoundingRect& right ) noexcept	{ left.Swap( right ); };
 
 
-		BoundingRect()							= default;
-		BoundingRect( const BoundingRect& )		= default;
-		BoundingRect( BoundingRect&& other )	: min{ std::move( other.min ) }, max{ std::move( other.max ) } {};
-		~BoundingRect()							= default;
+		inline BoundingRect() noexcept							= default;
+		inline BoundingRect( const BoundingRect& ) noexcept		= default;
+		inline BoundingRect( BoundingRect&& other ) noexcept	: min{ std::move( other.min ) }, max{ std::move( other.max ) } {};
+		inline ~BoundingRect() noexcept							= default;
 
-		explicit BoundingRect( const Vector2f& point );
-		BoundingRect( const Vector2f& point1, const Vector2f& point2 );
-		BoundingRect( const Vector2f& min, const Vector2f& max, decltype( std::ignore ) );
-
-
-		BoundingRect& operator = ( const BoundingRect& )	= default;
-		BoundingRect& operator = ( BoundingRect&& other )	{ BoundingRect{ std::move( other ) }.Swap( *this ); return *this; };
+		inline explicit BoundingRect( const Vector2f& point ) noexcept;
+		inline BoundingRect( const Vector2f& point1, const Vector2f& point2 ) noexcept;
+		inline BoundingRect( const Vector2f& min, const Vector2f& max, decltype( std::ignore ) ) noexcept;
 
 
-		void Swap( BoundingRect& other );
+		inline BoundingRect& operator = ( const BoundingRect& ) noexcept	= default;
+		inline BoundingRect& operator = ( BoundingRect&& other ) noexcept	{ BoundingRect{ std::move( other ) }.Swap( *this ); return *this; };
 
-		BoundingRect& Grow( const Vector2f& point );
-		BoundingRect& Grow( const BoundingRect& rect );
-		BoundingRect& Resize( const float new_size );
-		BoundingRect& Resize( const Vector2f& new_size );
 
-		Vector2f GetCorner( const size_t index ) const;
-		Vector2f GetCenter() const;
-		Vector2f GetSize() const;
+		inline void Swap( BoundingRect& other ) noexcept;
 
-		const size_t GetNearestCornerIndex( const Vector2f& point ) const;
+		inline BoundingRect& Grow( const Vector2f& point );
+		inline BoundingRect& Grow( const BoundingRect& rect );
+		inline BoundingRect& Resize( const float new_size );
+		inline BoundingRect& Resize( const Vector2f& new_size );
 
-		const bool ConsistsOf( const Vector2f& point ) const;
-		const bool ConsistsOf( const BoundingRect& rect ) const;
-		const bool IsIntersects( const BoundingRect& rect ) const;
-		const bool IsIntersects( const Vector2f& center, const float radius ) const;
+		inline Vector2f GetCorner( const size_t index ) const;
+		inline Vector2f GetCenter() const;
+		inline Vector2f GetSize() const;
+
+		inline const size_t GetNearestCornerIndex( const Vector2f& point ) const;
+
+		inline const bool ConsistsOf( const Vector2f& point ) const;
+		inline const bool ConsistsOf( const BoundingRect& rect ) const;
+		inline const bool IsIntersects( const BoundingRect& rect ) const;
+		inline const bool IsIntersects( const Vector2f& center, const float radius ) const;
 	};
 }
 }
