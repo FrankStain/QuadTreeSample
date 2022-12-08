@@ -23,9 +23,11 @@ namespace Internal
 // Most fundamental declarations.
 #include "forwards.h"
 #include "internal/forwards.h"
-#include "internal/aliases.h"
 
 // Internal definitions.
+#include "internal/aliases.h"
+#include "internal/structures.h"
+
 #include "internal/Point.h"
 #include "internal/Shape.h"
 

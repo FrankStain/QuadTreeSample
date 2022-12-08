@@ -7,16 +7,10 @@
 
 
 
-using QuadState	= std::variant<Points, Quads>;
 
 
-struct Quad final
-{
-	BoundingRect	bounds;
-	Vector2f		center;
-	size_t			level;
-	QuadState		state;
-};
+
+
 
 
 class ShapeProvider final
