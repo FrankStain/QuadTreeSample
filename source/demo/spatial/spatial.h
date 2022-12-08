@@ -4,6 +4,15 @@
 // Most fundamental dependencies.
 #include <demo/math/math.h>
 
+#include <array>
+#include <vector>
+#include <list>
+#include <queue>
+#include <memory>
+#include <optional>
+#include <variant>
+#include <utility>
+
 
 // Namespace definition.
 namespace Demo
