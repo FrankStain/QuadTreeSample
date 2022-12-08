@@ -14,32 +14,32 @@ inline namespace Math
 		float	y = NAN_VALUE;
 
 
-		friend void swap( Vector2f& left, Vector2f& right )	{ left.Swap( right ); };
+		inline friend void swap( Vector2f& left, Vector2f& right ) noexcept	{ left.Swap( right ); };
 
 
-		Vector2f()						= default;
-		Vector2f( const Vector2f& )		= default;
-		Vector2f( Vector2f&& other )	: x{ std::exchange( other.x, NAN_VALUE ) }, y{ std::exchange( other.y, NAN_VALUE ) } {};
-		~Vector2f()						= default;
+		inline Vector2f() noexcept						= default;
+		inline Vector2f( const Vector2f& ) noexcept		= default;
+		inline Vector2f( Vector2f&& other ) noexcept	: x{ std::exchange( other.x, NAN_VALUE ) }, y{ std::exchange( other.y, NAN_VALUE ) } {};
+		inline ~Vector2f() noexcept						= default;
 
-		Vector2f( const float x, const float y )	: x{ x }, y{ y } {};
-
-
-		Vector2f& operator = ( const Vector2f& )	= default;
-		Vector2f& operator = ( Vector2f&& other )	{ Vector2f{ std::move( other ) }.Swap( *this ); return *this; };
+		inline Vector2f( const float x, const float y ) noexcept	: x{ x }, y{ y } {};
 
 
-		void Swap( Vector2f& other );
+		inline Vector2f& operator = ( const Vector2f& ) noexcept	= default;
+		inline Vector2f& operator = ( Vector2f&& other ) noexcept	{ Vector2f{ std::move( other ) }.Swap( *this ); return *this; };
 
 
-		Vector2f& Minimize( const Vector2f& other );
-		Vector2f Minimized( const Vector2f& other ) const;
-		Vector2f& Maximize( const Vector2f& other );
-		Vector2f Maximized( const Vector2f& other ) const;
+		inline void Swap( Vector2f& other ) noexcept;
 
 
-		const float GetSquareLength() const;
-		const float GetLength() const;
+		inline Vector2f& Minimize( const Vector2f& other );
+		inline Vector2f Minimized( const Vector2f& other ) const;
+		inline Vector2f& Maximize( const Vector2f& other );
+		inline Vector2f Maximized( const Vector2f& other ) const;
+
+
+		inline const float GetSquareLength() const;
+		inline const float GetLength() const;
 	};
 }
 }
