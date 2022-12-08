@@ -11,22 +11,22 @@ namespace Internal
 	{
 	public:
 		Shape() = delete;
-		~Shape() = default;
+		inline ~Shape() noexcept = default;
 
-		Shape( QuadTree& host, const BoundingRect& bounds );
+		Shape( QuadTree& host, const BoundingRect& bounds ) noexcept;
 
 	public:
 		void SetBounds( const BoundingRect& bounds );
 
-		void SetTag( const size_t value )						{ m_tag = value; };
+		inline void SetTag( const size_t value )						{ m_tag = value; };
 
 
-		const BoundingRect& GetBounds() const					{ return m_bounds; };
-		const Point& GetPoint( const size_t index ) const		{ return m_points[ index ]; };
-		const size_t GetTag() const								{ return m_tag; };
+		inline const BoundingRect& GetBounds() const					{ return m_bounds; };
+		inline const Point& GetPoint( const size_t index ) const		{ return m_points[ index ]; };
+		inline const size_t GetTag() const								{ return m_tag; };
 
 
-		const Point& operator [] ( const size_t index ) const	{ return GetPoint( index ); };
+		inline const Point& operator [] ( const size_t index ) const	{ return GetPoint( index ); };
 
 	private:
 		QuadTree*		m_host		= nullptr;

@@ -9,7 +9,7 @@ inline namespace Spatial
 {
 namespace Internal
 {
-	Shape::Shape( QuadTree& host, const BoundingRect& bounds )
+	Shape::Shape( QuadTree& host, const BoundingRect& bounds ) noexcept
 		: m_host{ &host }
 		, m_bounds{ bounds }
 	{
