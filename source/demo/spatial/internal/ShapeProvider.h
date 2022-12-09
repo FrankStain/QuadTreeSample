@@ -22,8 +22,6 @@ namespace Internal
 		std::pair<Shape*, Handle> Create( QuadTree& host, const BoundingRect& bounds );
 		void Destroy( const Handle handle );
 
-		Shape* Query( const Handle handle ) const;
-
 	private:
 		BucketStorage m_slots;
 	};

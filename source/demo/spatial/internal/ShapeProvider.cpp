@@ -52,12 +52,6 @@ namespace
 	{
 		GetSlot( m_slots, handle ).reset();
 	}
-
-	Shape* ShapeProvider::Query( const Handle handle ) const
-	{
-		auto& slot = GetSlot( m_slots, handle );
-		return ( slot.has_value() )? &slot.value() : nullptr;
-	}
 }
 }
 }
