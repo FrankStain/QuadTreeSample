@@ -10,36 +10,33 @@ inline namespace Spatial
 	public:
 		friend class Internal::Shape;
 
+		using Shape = Internal::Shape;
+
 	public:
-		std::shared_ptr<Internal::Shape> RetainShape( const BoundingRect& bounds );
-
-		std::vector<const Internal::Shape*> Find( const BoundingRect& bounds ) const;
-		std::vector<const Internal::Shape*> Find( const Vector2f& center, const float radius ) const;
-
-		const BoundingRect& GetBounds() const { return m_bounds; };
-
-	private:
-		static void AddOnce( std::vector<const Internal::Shape*>& destination, const Internal::Shape& shape );
-		void SplitToChildren( Internal::Quad& quad ) const;
-		static const size_t GetQuarterIndex( const Internal::Quad& quad, const Internal::Point& point );
-		static BoundingRect GetQuarterBounds( const Internal::Quad& quad, const size_t quarter_index );
-
-		static const bool IsLeaf( const Internal::Quad& quad );
-
-	private:
-		void ReleaseShape( const Internal::ShapeProvider::Handle handle, Internal::Shape* shape );
-
-		void BuildTree() const;
-		void AddPoint( Internal::Quad& quad, const Internal::Point& point ) const;
-		void RemovePoint( Internal::Quad& quad, const Internal::Point& point ) const;
-
-	private:
 		static constexpr size_t MAX_POINTS = 4;
 		static constexpr size_t MAX_LEVELS = 8;
 
+	public:
+		std::shared_ptr<Shape> Acquire( const BoundingRect& bounds );
+
+
+		std::vector<const Shape*> Find( const BoundingRect& bounds ) const;
+		std::vector<const Shape*> Find( const Vector2f& center, const float radius ) const;
+
+
+		inline const BoundingRect& GetBounds() const	{ return m_bounds; };
+
+	private:
+		void ReleaseShape( const Internal::ShapeProvider::Handle handle, Shape* shape );
+
+
+		void BuildTree() const;
+		void AddPoint( Internal::Quad& quad, const Internal::Point& point ) const;
+		void SplitToQuarters( Internal::Quad& quad ) const;
+
 	private:
 		Internal::ShapeProvider	m_shape_provider;
-		BoundingRect			m_bounds{ { 0.0f, 0.0f }, { 0.0f, 0.0f }, std::ignore };
+		BoundingRect			m_bounds{ { 0.0f, 0.0f } };
 
 	private:
 		mutable Internal::Points				m_points;

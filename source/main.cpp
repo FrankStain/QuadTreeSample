@@ -33,7 +33,7 @@ int main()
 				float( 6.0 * random_distribution( randomizer ) )
 			};
 
-			shapes.emplace_back( tree.RetainShape( Demo::BoundingRect{ center }.Resize( size.Maximized( { 1.0f, 1.0f } ) * 0.5f ) ) );
+			shapes.emplace_back( tree.Acquire( Demo::BoundingRect{ center }.Resize( size.Maximized( { 1.0f, 1.0f } ) * 0.5f ) ) );
 			shapes.back()->SetTag( index );
 		}
 	}

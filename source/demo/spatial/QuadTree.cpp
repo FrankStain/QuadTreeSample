@@ -7,9 +7,102 @@ namespace Demo
 {
 inline namespace Spatial
 {
-	std::shared_ptr<Internal::Shape> QuadTree::RetainShape( const BoundingRect& bounds )
+namespace
+{
+	const bool IsLeaf( const Internal::Quad& quad )
 	{
-		auto [ shape, handle ] = m_shape_provider.Create( *this, bounds );
+		return std::holds_alternative<Internal::Points>( quad.state );
+	}
+
+	const bool IsSubtree( const Internal::Quad& quad )
+	{
+		return std::holds_alternative<Internal::Quads>( quad.state );
+	}
+
+	Internal::Points& GetPoints( Internal::Quad& quad )
+	{
+		return std::get<Internal::Points>( quad.state );
+	}
+
+	const Internal::Points& GetPoints( const Internal::Quad& quad )
+	{
+		return std::get<Internal::Points>( quad.state );
+	}
+
+	Internal::Quads& GetQuarters( Internal::Quad& quad )
+	{
+		return std::get<Internal::Quads>( quad.state );
+	}
+
+	const Internal::Quads& GetQuarters( const Internal::Quad& quad )
+	{
+		return std::get<Internal::Quads>( quad.state );
+	}
+
+	const bool IsEmpty( const Internal::Quad& quad )
+	{
+		if( IsSubtree( quad ) )
+		{
+			const auto& quarters = GetQuarters( quad );
+			return std::all_of( quarters.begin(), quarters.end(), []( const std::shared_ptr<Internal::Quad>& slot ) { return !slot; } );
+		}
+
+		return GetPoints( quad ).empty();
+	}
+
+	void AddOnce( std::vector<const QuadTree::Shape*>& storage, const QuadTree::Shape& value )
+	{
+		auto found_slot = std::upper_bound( storage.begin(), storage.end(), &value );
+		if( ( found_slot == storage.begin() ) || ( *std::prev( found_slot ) != &value ) )
+		{
+			storage.insert( found_slot, &value );
+		}
+	}
+
+	const size_t GetQuarterIndex( const Internal::Quad& quad, const Internal::Point& point )
+	{
+		return quad.bounds.GetNearestCornerIndex( point.GetPosition() );
+	}
+
+	Demo::BoundingRect GetQuarterBounds( const Internal::Quad& quad, const size_t quarter_index )
+	{
+		constexpr std::pair<size_t, size_t> quarter_min[] { { 0, 0 }, { 1, 0 }, { 1, 1 }, { 0, 1 } };
+		constexpr std::pair<size_t, size_t> quarter_max[] { { 1, 1 }, { 2, 1 }, { 2, 2 }, { 1, 2 } };
+
+		const Vector2f corners[] { quad.bounds.min, quad.center, quad.bounds.max };
+
+		const auto [ min_x, min_y ] = quarter_min[ quarter_index ];
+		const auto [ max_x, max_y ] = quarter_max[ quarter_index ];
+		return { { corners[ min_x ].x, corners[ min_y ].y }, { corners[ max_x ].x, corners[ max_y ].y }, std::ignore };
+	}
+
+	void RemovePoint( Internal::Quad& quad, const Internal::Point& point )
+	{
+		if( IsLeaf( quad ) )
+		{
+			auto& points = GetPoints( quad );
+			auto found_point = std::find( points.begin(), points.end(), &point );
+			std::swap( *found_point, points.back() );
+			points.pop_back();
+			return;
+		}
+
+		auto& quarter = GetQuarters( quad )[ GetQuarterIndex( quad, point ) ];
+		if( quarter )
+		{
+			RemovePoint( *quarter, point );
+			if( IsEmpty( *quarter ) )
+			{
+				quarter.reset();
+			}
+		}
+	}
+}
+
+
+	std::shared_ptr<QuadTree::Shape> QuadTree::Acquire( const BoundingRect& bounds )
+	{
+		const auto [ shape, handle ] = m_shape_provider.Create( *this, bounds );
 		if( !m_bounds.ConsistsOf( bounds ) )
 		{
 			m_bounds.Grow( bounds );
@@ -35,12 +128,12 @@ inline namespace Spatial
 			}
 		}
 
-		return { shape, [this, handle = handle]( Internal::Shape* shape ){ ReleaseShape( handle, shape ); } };
+		return { shape, [this, handle = handle]( Shape* shape ){ ReleaseShape( handle, shape ); } };
 	}
 
-	std::vector<const Internal::Shape*> QuadTree::Find( const BoundingRect& bounds ) const
+	std::vector<const QuadTree::Shape*> QuadTree::Find( const BoundingRect& bounds ) const
 	{
-		std::vector<const Internal::Shape*> result;
+		std::vector<const Shape*> result;
 		if( !m_root )
 		{
 			BuildTree();
@@ -55,7 +148,7 @@ inline namespace Spatial
 
 			if( IsLeaf( quad ) )
 			{
-				for( const auto point : std::get<Internal::Points>( quad.state ) )
+				for( const auto point : GetPoints( quad ) )
 				{
 					if( bounds.ConsistsOf( point->GetPosition() ) )
 					{
@@ -65,7 +158,7 @@ inline namespace Spatial
 			}
 			else
 			{
-				for( const auto& quad_slot : std::get<Internal::Quads>( quad.state ) )
+				for( const auto& quad_slot : GetQuarters( quad ) )
 				{
 					if( quad_slot && bounds.IsIntersects( quad_slot->bounds ) )
 					{
@@ -78,17 +171,14 @@ inline namespace Spatial
 		return result;
 	}
 
-	std::vector<const Internal::Shape*> QuadTree::Find( const Vector2f& center, const float radius ) const
+	std::vector<const QuadTree::Shape*> QuadTree::Find( const Vector2f& center, const float radius ) const
 	{
-		std::vector<const Internal::Shape*> result;
-
-		BoundingRect bounds{ BoundingRect{ center }.Resize( radius ) };
-		result = Find( bounds );
+		std::vector<const Shape*> result{ Find( BoundingRect{ center }.Resize( radius ) ) };
 
 		auto new_result_end = std::remove_if(
 			result.begin(),
 			result.end(),
-			[&center, radius]( const Internal::Shape* shape ) -> const bool
+			[&center, radius]( const Shape* shape ) -> const bool
 			{
 				return shape->GetBounds().IsIntersects( center, radius );
 			}
@@ -102,55 +192,8 @@ inline namespace Spatial
 		return result;
 	}
 
-	void QuadTree::AddOnce( std::vector<const Internal::Shape*>& destination, const Internal::Shape& shape )
+	void QuadTree::ReleaseShape( const Internal::ShapeProvider::Handle handle, Shape* shape )
 	{
-		auto found_slot = std::upper_bound( destination.begin(), destination.end(), &shape );
-		if( ( found_slot == destination.begin() ) || ( *std::prev( found_slot ) != &shape ) )
-		{
-			destination.insert( found_slot, &shape );
-		}
-	}
-
-	void QuadTree::SplitToChildren( Internal::Quad& quad ) const
-	{
-		const Internal::Points points{ std::move( std::get<Internal::Points>( quad.state ) ) };
-
-		quad.state.emplace<Internal::Quads>();
-		for( const auto& point : points )
-		{
-			AddPoint( quad, *point );
-		}
-	}
-
-	const size_t QuadTree::GetQuarterIndex( const Internal::Quad& quad, const Internal::Point& point )
-	{
-		return quad.bounds.GetNearestCornerIndex( point.GetPosition() );
-	}
-
-	BoundingRect QuadTree::GetQuarterBounds( const Internal::Quad& quad, const size_t quarter_index )
-	{
-		constexpr std::pair<size_t, size_t> quarter_min[] { { 0, 0 }, { 1, 0 }, { 1, 1 }, { 0, 1 } };
-		constexpr std::pair<size_t, size_t> quarter_max[] { { 1, 1 }, { 2, 1 }, { 2, 2 }, { 1, 2 } };
-
-		const Vector2f corners[] { quad.bounds.min, quad.center, quad.bounds.max };
-
-		const auto [ min_x, min_y ] = quarter_min[ quarter_index ];
-		const auto [ max_x, max_y ] = quarter_max[ quarter_index ];
-		return { { corners[ min_x ].x, corners[ min_y ].y }, { corners[ max_x ].x, corners[ max_y ].y }, std::ignore };
-	}
-
-	const bool QuadTree::IsLeaf( const Internal::Quad& quad )
-	{
-		return std::holds_alternative<Internal::Points>( quad.state );
-	}
-
-	void QuadTree::ReleaseShape( const Internal::ShapeProvider::Handle handle, Internal::Shape* shape )
-	{
-		if( !shape || ( shape != m_shape_provider.Query( handle ) ) )
-		{
-			return;
-		}
-
 		for( auto& point : m_points )
 		{
 			if( point && ( point->GetHost() == shape ) )
@@ -198,19 +241,18 @@ inline namespace Spatial
 	{
 		if( IsLeaf( quad ) )
 		{
-			auto& points = std::get<Internal::Points>( quad.state );
+			auto& points = GetPoints( quad );
 			if( ( points.size() < MAX_POINTS ) || ( quad.level == MAX_LEVELS ) )
 			{
 				points.push_back( &point );
 				return;
 			}
 
-			SplitToChildren( quad );
+			SplitToQuarters( quad );
 		}
 
 		const size_t quarter_index = GetQuarterIndex( quad, point );
-		auto& quad_quarters = std::get<Internal::Quads>( quad.state );
-		auto& quarter = quad_quarters[ quarter_index ];
+		auto& quarter = GetQuarters( quad )[ quarter_index ];
 		if( !quarter )
 		{
 			quarter = m_quad_provider.Create( GetQuarterBounds( quad, quarter_index ), quad.level + 1 );
@@ -219,37 +261,14 @@ inline namespace Spatial
 		AddPoint( *quarter, point );
 	}
 
-	void QuadTree::RemovePoint( Internal::Quad& quad, const Internal::Point& point ) const
+	void QuadTree::SplitToQuarters( Internal::Quad& quad ) const
 	{
-		if( IsLeaf( quad ) )
-		{
-			auto& points = std::get<Internal::Points>( quad.state );
-			points.erase( std::find( points.begin(), points.end(), &point ) );
-			return;
-		}
+		const Internal::Points points{ std::move( GetPoints( quad ) ) };
 
-		const size_t quarter_index = GetQuarterIndex( quad, point );
-		auto& quad_quarters = std::get<Internal::Quads>( quad.state );
-		auto& quarter = quad_quarters[ quarter_index ];
-		if( quarter )
+		quad.state.emplace<Internal::Quads>();
+		for( const auto& point : points )
 		{
-			RemovePoint( *quarter, point );
-		}
-
-		if( IsLeaf( *quarter ) )
-		{
-			if( std::get<Internal::Points>( quarter->state ).empty() )
-			{
-				quarter.reset();
-			}
-		}
-		else
-		{
-			const auto& quarters = std::get<Internal::Quads>( quarter->state );
-			if( std::all_of( quarters.begin(), quarters.end(), []( const std::shared_ptr<Internal::Quad>& slot ) { return !slot; } ) )
-			{
-				quarter.reset();
-			}
+			AddPoint( quad, *point );
 		}
 	}
 }
