@@ -10,6 +10,9 @@ namespace Internal
 	class Shape final
 	{
 	public:
+		using Point = Point;
+
+	public:
 		Shape() = delete;
 		inline ~Shape() noexcept = default;
 
