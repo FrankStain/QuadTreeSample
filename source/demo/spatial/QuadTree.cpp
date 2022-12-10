@@ -100,7 +100,7 @@ namespace
 }
 
 
-	std::shared_ptr<QuadTree::Shape> QuadTree::Acquire( const BoundingRect& bounds )
+	QuadTree::SharedShape QuadTree::Acquire( const BoundingRect& bounds )
 	{
 		const auto [ shape, handle ] = m_shape_provider.Create( *this, bounds );
 		if( !m_bounds.ConsistsOf( bounds ) )

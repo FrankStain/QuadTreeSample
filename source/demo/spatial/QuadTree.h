@@ -11,13 +11,14 @@ inline namespace Spatial
 		friend class Internal::Shape;
 
 		using Shape = Internal::Shape;
+		using SharedShape = std::shared_ptr<Shape>;
 
 	public:
 		static constexpr size_t MAX_POINTS = 4;
 		static constexpr size_t MAX_LEVELS = 8;
 
 	public:
-		std::shared_ptr<Shape> Acquire( const BoundingRect& bounds );
+		SharedShape Acquire( const BoundingRect& bounds );
 
 
 		std::vector<const Shape*> Find( const BoundingRect& bounds ) const;
