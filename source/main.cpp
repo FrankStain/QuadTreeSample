@@ -3,19 +3,13 @@
 #include <demo/spatial/spatial.h>
 
 
-namespace Demo
-{
-	using Spatial::Internal::Shape;
-}
-
-
 int main()
 {
 	const size_t shapes_count = 105;
 
 	Demo::QuadTree tree;
 
-	std::vector<std::shared_ptr<Demo::Shape>> shapes;
+	std::vector<std::shared_ptr<Demo::QuadTree::Shape>> shapes;
 	shapes.reserve( shapes_count );
 
 	{
@@ -42,7 +36,15 @@ int main()
 		auto matches = tree.Find( { { 2.5f, 2.5f }, { 3.95f, 4.8f }, std::ignore } );
 	}
 
-	auto new_end = std::remove_if( shapes.begin(), shapes.end(), []( const std::shared_ptr<Demo::Shape>& shape ) { return ( shape->GetTag() & 1 ) != 0; } );
+	auto new_end = std::remove_if(
+		shapes.begin(),
+		shapes.end(),
+		[]( const std::shared_ptr<Demo::QuadTree::Shape>& shape )
+		{
+			return ( shape->GetTag() & 1 ) != 0;
+		}
+	);
+
 	shapes.erase( new_end, shapes.end() );
 
 	{
