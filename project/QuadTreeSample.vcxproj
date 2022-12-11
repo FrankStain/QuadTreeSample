@@ -177,6 +177,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\source\demo\spatial\internal\Point.cpp" />
     <ClCompile Include="..\source\demo\spatial\internal\QuadProvider.cpp" />
     <ClCompile Include="..\source\demo\spatial\internal\Shape.cpp" />
     <ClCompile Include="..\source\demo\spatial\internal\ShapeProvider.cpp" />

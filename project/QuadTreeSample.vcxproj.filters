@@ -47,6 +47,9 @@
     <ClCompile Include="..\source\demo\spatial\internal\QuadProvider.cpp">
       <Filter>Source Files\demo\spatial\internal</Filter>
     </ClCompile>
+    <ClCompile Include="..\source\demo\spatial\internal\Point.cpp">
+      <Filter>Source Files\demo\spatial\internal</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\source\main.h">
