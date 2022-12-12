@@ -8,7 +8,7 @@ inline namespace Spatial
 namespace Internal
 {
 	/**
-		@brief Provider of shape instances.
+		@brief	Provider of shape instances.
 
 		Provider represents the memory pool abstraction. Shapes are stored in slots of type `std::optional`.
 		Slots are packed in buckets with length of `BUCKET_LENGTH`, obviously. Buckets are created dynamically and owned by `std::vector` via `std::unique_ptr`.
