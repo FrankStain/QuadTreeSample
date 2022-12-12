@@ -9,36 +9,43 @@ inline namespace Spatial
 {
 namespace
 {
+	// Whether the quad represents leaf of tree.
 	const bool IsLeaf( const Internal::Quad& quad )
 	{
 		return std::holds_alternative<Internal::Points>( quad.state );
 	}
 
+	// Whether the quad represents root of quad subtree.
 	const bool IsSubtree( const Internal::Quad& quad )
 	{
 		return std::holds_alternative<Internal::Quads>( quad.state );
 	}
 
+	// Access the points from leaf quad.
 	Internal::Points& GetPoints( Internal::Quad& quad )
 	{
 		return std::get<Internal::Points>( quad.state );
 	}
 
+	// Get the points from leaf quad.
 	const Internal::Points& GetPoints( const Internal::Quad& quad )
 	{
 		return std::get<Internal::Points>( quad.state );
 	}
 
+	// Access the quarters of subtree quad.
 	Internal::Quads& GetQuarters( Internal::Quad& quad )
 	{
 		return std::get<Internal::Quads>( quad.state );
 	}
 
+	// Get the quarters of subtree quad.
 	const Internal::Quads& GetQuarters( const Internal::Quad& quad )
 	{
 		return std::get<Internal::Quads>( quad.state );
 	}
 
+	// Whether the quad is empty, whenever it is leaf or subtree.
 	const bool IsEmpty( const Internal::Quad& quad )
 	{
 		if( IsSubtree( quad ) )
@@ -50,6 +57,7 @@ namespace
 		return GetPoints( quad ).empty();
 	}
 
+	// Algorithm to add the shape only once.
 	void AddOnce( std::vector<const QuadTree::Shape*>& storage, const QuadTree::Shape& value )
 	{
 		auto found_slot = std::upper_bound( storage.begin(), storage.end(), &value );
@@ -59,23 +67,26 @@ namespace
 		}
 	}
 
+	// Get the index of quad quarter, where the given point is placed.
 	const size_t GetQuarterIndex( const Internal::Quad& quad, const Internal::Point& point )
 	{
 		return quad.bounds.GetNearestCornerIndex( point.GetPosition() );
 	}
 
+	// Get the bounds of quad quarter by given index.
 	Demo::BoundingRect GetQuarterBounds( const Internal::Quad& quad, const size_t quarter_index )
 	{
-		constexpr std::pair<size_t, size_t> quarter_min[] { { 0, 0 }, { 1, 0 }, { 1, 1 }, { 0, 1 } };
-		constexpr std::pair<size_t, size_t> quarter_max[] { { 1, 1 }, { 2, 1 }, { 2, 2 }, { 1, 2 } };
+		constexpr std::pair<size_t, size_t> min_field_indices[] { { 0, 0 }, { 1, 0 }, { 1, 1 }, { 0, 1 } };
+		constexpr std::pair<size_t, size_t> max_field_indices[] { { 1, 1 }, { 2, 1 }, { 2, 2 }, { 1, 2 } };
 
 		const Vector2f corners[] { quad.bounds.min, quad.center, quad.bounds.max };
 
-		const auto [ min_x, min_y ] = quarter_min[ quarter_index ];
-		const auto [ max_x, max_y ] = quarter_max[ quarter_index ];
+		const auto [ min_x, min_y ] = min_field_indices[ quarter_index ];
+		const auto [ max_x, max_y ] = max_field_indices[ quarter_index ];
 		return { { corners[ min_x ].x, corners[ min_y ].y }, { corners[ max_x ].x, corners[ max_y ].y }, std::ignore };
 	}
 
+	// Remove the given point from indexing.
 	void RemovePoint( Internal::Quad& quad, const Internal::Point& point )
 	{
 		if( IsLeaf( quad ) )
