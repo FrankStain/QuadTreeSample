@@ -10,7 +10,7 @@ inline namespace Spatial
 namespace Internal
 {
 	Shape::Shape( QuadTree& host, const BoundingRect& bounds ) noexcept
-		: m_host{ &host }
+		: m_host{ host }
 		, m_bounds{ bounds }
 	{
 		for( size_t index = 0; index < std::size( m_points ); ++index )
