@@ -9,21 +9,25 @@ namespace Internal
 {
 namespace
 {
+	// Translate the 2D shape index to shape handle.
 	const ShapeProvider::Handle ToHandle( const size_t bucket_index, const size_t slot_index )
 	{
 		return ShapeProvider::Handle{ bucket_index * ShapeProvider::BUCKET_LENGTH + slot_index };
 	}
 
+	// Translate the shape handle to 2D shape index.
 	std::pair<size_t, size_t> FromHandle( const ShapeProvider::Handle handle )
 	{
 		return { size_t( handle ) / ShapeProvider::BUCKET_LENGTH, size_t( handle ) % ShapeProvider::BUCKET_LENGTH };
 	}
 
+	// Whether the bucket consists of any free slot for new shape.
 	const bool HasFreeSlot( const ShapeProvider::Bucket& bucket )
 	{
 		return std::any_of( bucket.begin(), bucket.end(), []( const std::optional<Shape>& slot ) { return !slot.has_value(); } );
 	}
 
+	// Get the shape slot from given storage by given handle.
 	std::optional<Shape>& GetSlot( const ShapeProvider::BucketStorage& storage, const ShapeProvider::Handle handle )
 	{
 		auto [ bucket_index, slot_index ] = FromHandle( handle );
