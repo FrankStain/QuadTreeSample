@@ -47,7 +47,7 @@
     <ClCompile Include="..\source\demo\spatial\internal\QuadProvider.cpp">
       <Filter>Source Files\demo\spatial\internal</Filter>
     </ClCompile>
-    <ClCompile Include="..\source\demo\spatial\internal\Point.cpp">
+    <ClCompile Include="..\source\demo\spatial\internal\IndexTree.cpp">
       <Filter>Source Files\demo\spatial\internal</Filter>
     </ClCompile>
   </ItemGroup>
@@ -79,9 +79,6 @@
     <ClInclude Include="..\source\demo\spatial\internal\forwards.h">
       <Filter>Header Files\demo\spatial\internal</Filter>
     </ClInclude>
-    <ClInclude Include="..\source\demo\spatial\internal\Point.h">
-      <Filter>Header Files\demo\spatial\internal</Filter>
-    </ClInclude>
     <ClInclude Include="..\source\demo\spatial\internal\Shape.h">
       <Filter>Header Files\demo\spatial\internal</Filter>
     </ClInclude>
@@ -92,6 +89,9 @@
       <Filter>Header Files\demo\spatial\internal</Filter>
     </ClInclude>
     <ClInclude Include="..\source\demo\spatial\internal\ShapeProvider.h">
+      <Filter>Header Files\demo\spatial\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\source\demo\spatial\internal\IndexTree.h">
       <Filter>Header Files\demo\spatial\internal</Filter>
     </ClInclude>
   </ItemGroup>

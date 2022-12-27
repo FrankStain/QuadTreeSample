@@ -177,7 +177,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\source\demo\spatial\internal\Point.cpp" />
+    <ClCompile Include="..\source\demo\spatial\internal\IndexTree.cpp" />
     <ClCompile Include="..\source\demo\spatial\internal\QuadProvider.cpp" />
     <ClCompile Include="..\source\demo\spatial\internal\Shape.cpp" />
     <ClCompile Include="..\source\demo\spatial\internal\ShapeProvider.cpp" />
@@ -191,7 +191,7 @@
     <ClInclude Include="..\source\demo\spatial\forwards.h" />
     <ClInclude Include="..\source\demo\spatial\internal\aliases.h" />
     <ClInclude Include="..\source\demo\spatial\internal\forwards.h" />
-    <ClInclude Include="..\source\demo\spatial\internal\Point.h" />
+    <ClInclude Include="..\source\demo\spatial\internal\IndexTree.h" />
     <ClInclude Include="..\source\demo\spatial\internal\QuadProvider.h" />
     <ClInclude Include="..\source\demo\spatial\internal\Shape.h" />
     <ClInclude Include="..\source\demo\spatial\internal\ShapeProvider.h" />
