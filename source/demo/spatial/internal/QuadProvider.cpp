@@ -11,16 +11,21 @@ namespace Internal
 	{
 		auto& quad = m_slots.emplace_back();
 
-		quad.bounds = bounds;
-		quad.center = bounds.GetCenter();
-		quad.level	= level;
+		quad.bounds		= bounds;
+		quad.center		= bounds.GetCenter();
+		quad.level		= level;
+		quad.is_leaf	= true;
 
 		return { &quad, [this, slot = std::prev( m_slots.end() )]( Quad* ) { Destroy( slot ); } };
 	}
 
 	void QuadProvider::Destroy( std::list<Quad>::iterator slot )
 	{
-		slot->state.emplace<Points>();
+		for( auto& quarter : slot->quarters )
+		{
+			quarter.reset();
+		}
+
 		m_slots.erase( slot );
 	}
 }
