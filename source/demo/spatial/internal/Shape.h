@@ -10,10 +10,8 @@ namespace Internal
 	/**
 		@brief	Shape implementation.
 
-		Shapes are the collections of points. All points of shape always indexed by quad tree.
-		Each shape is represented by bounding rect. All four corners of that bounding rect are indexed by quad tree.
-		So that, the shape may be found in different quads, but each quad will index only one point of shape.
-		Each point can be accessed from shape. The indexing of points is same as indexing of corners in bounding rect.
+		Shapes are interface to communicate with spatial index. Shape is described by bounding rect. Shapes are indexed in quadtree.
+		Once the shape moves the bounds using `SetBounds`, it always re-indexed until it goes out indexing bounds.
 	*/
 	class Shape final
 	{
