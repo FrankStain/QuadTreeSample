@@ -36,11 +36,12 @@ namespace Internal
 #include "internal/aliases.h"
 #include "internal/structures.h"
 
-#include "internal/Point.h"
 #include "internal/Shape.h"
 
 #include "internal/ShapeProvider.h"
 #include "internal/QuadProvider.h"
+
+#include "internal/IndexTree.h"
 
 // Public definitions.
 #include "QuadTree.h"
