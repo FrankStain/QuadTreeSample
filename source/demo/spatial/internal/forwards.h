@@ -6,7 +6,7 @@ inline namespace Spatial
 {
 namespace Internal
 {
-	// Allow the points to reference the shape.
+	// Allow the aliases to use shapes.
 	class Shape;
 
 	// Allow the aliases to use quads.
