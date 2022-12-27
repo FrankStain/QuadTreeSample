@@ -19,21 +19,10 @@ inline namespace Spatial
 	*/
 	class QuadTree final
 	{
-	// Public constants.
-	public:
-		// Maximum points indexed by single quad before split it to quarters.
-		static constexpr size_t MAX_POINTS = 4;
-
-		// Maximum level of quad tree depth before the quarters splitting will be stopped.
-		static constexpr size_t MAX_LEVELS = 8;
-
 	// Public inner types and friendship declarations.
 	public:
 		// Allow the shape to use private interface.
 		friend class Internal::Shape;
-
-		// Allow the point to use private interface.
-		friend class Internal::Point;
 
 
 		// Shape to be indexed.
@@ -63,16 +52,6 @@ inline namespace Spatial
 		// Perform the shape releasing.
 		void ReleaseShape( const Internal::ShapeProvider::Handle handle, Shape* shape );
 
-
-		// Build the quad tree.
-		void BuildTree() const;
-
-		// Add the point to quad tree.
-		void AddPoint( Internal::Quad& quad, const Internal::Point& point ) const;
-
-		// Split the leaf quad to quarters. Given quad becomes the root of subtree after the operation.
-		void SplitToQuarters( Internal::Quad& quad ) const;
-
 	// Private state.
 	private:
 		Internal::ShapeProvider	m_shape_provider;			// Provider for shapes.
@@ -80,9 +59,7 @@ inline namespace Spatial
 
 	// Private non-state.
 	private:
-		mutable Internal::Points				m_points;			// Blob of points to be indexed.
-		mutable Internal::QuadProvider			m_quad_provider;	// Provider for quads.
-		mutable std::shared_ptr<Internal::Quad>	m_root;				// Root of quad tree.
+		mutable Internal::IndexTree	m_tree; // The quad tree.
 	};
 }
 }
