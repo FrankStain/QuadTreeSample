@@ -17,11 +17,6 @@ namespace Internal
 	*/
 	class Shape final
 	{
-	// Public inner types.
-	public:
-		// Single point of shape.
-		using Point = Point;
-
 	// Lifetime management.
 	public:
 		Shape() = delete;
@@ -42,20 +37,13 @@ namespace Internal
 		// Get current bounds of shape.
 		inline const BoundingRect& GetBounds() const					{ return m_bounds; };
 
-		// Get the point of shape by given index.
-		inline const Point& GetPoint( const size_t index ) const		{ return m_points[ index ]; };
-
 		// Get the abstract tag of shape.
 		inline const size_t GetTag() const								{ return m_tag; };
-
-
-		inline const Point& operator [] ( const size_t index ) const	{ return GetPoint( index ); };
 
 	// Private state.
 	private:
 		QuadTree&		m_host;				// Quad tree that host shape.
 		BoundingRect	m_bounds;			// Bounds of shape.
-		Point			m_points[4];		// Hosted points.
 
 		size_t			m_tag		= 0;	// Abstract tag.
 	};
