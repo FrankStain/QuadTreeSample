@@ -21,10 +21,15 @@ namespace Internal
 	*/
 	struct Quad final
 	{
-		BoundingRect	bounds;	// Bounding rect of quadrant.
-		Vector2f		center;	// Center of quadrant bounds.
-		size_t			level;	// Level of quadrant in quad tree.
-		QuadState		state;	// State of quadrant.
+		Shapes			shapes;				// Collection of shapes uniquely indexed by quad.
+		Quarters		quarters;			// Quarters of quad.
+
+		size_t			level;				// Level of quadrant in quad tree.
+
+		BoundingRect	bounds;				// Bounding rect of quadrant.
+		Vector2f		center;				// Center of quadrant bounds.
+
+		bool			is_leaf = false;	// Whether the quad stores no subtree of quarters.
 	};
 }
 }
