@@ -25,19 +25,21 @@ Such trees allow fast search and discovery in 2D spaces. They are not suitable f
 This code can:
 
 - Allows to "occupy" the area in space, by means the shape. While the shape is being rented, it is available for issuance in the search functions.
-- Implements an leaves-indexing strategy. Quadrants optimally utilize the space and able to switch from a leaf to a subtree.
-- Only corners of shape are indexed. It allows to unambiguously map the shape to the set of leaf quads.
+- Implements the indexing strategy in nodes. Quadrants can simultaneously store both lists of shapes and links to subtree elements.
+- Shapes are directly indexed. The shape is indexed by the quad, where shape fit most tightly the internal space.
 - Performs the searching within different spatial area.
 - Support the movable shapes. In this case, the shape is re-indexed.
 - Dynamically determines the size of the indexing area.
 
-Each rented shape is described by its own bounds (AABR - Axis-Aligned Bounding Rect). All 4 corners of this bounds are stored as points to be indexed in
-quadtree. The shape interface allows you to set the position of the new bounds. After changing the position the shape is re-indexed or the entire tree is reset.
+Each rented shape is described by its own bounds (AABR - Axis-Aligned Bounding Rect). This bounds is used for indexing and searching the shape.
+The shape interface allows you to set the position of the new bounds. After changing the position the shape is re-indexed or the entire tree is reset.
 
 The quadtree itself is built lazily, on the first search request, if the tree is reset. The tree builds completely.
 
-Quadrants can only be in one of two states: the leaf to store points, or the root of a subtree to store quarter quads.
-So the quadrant optimally uses its memory, giving access to only one state at a particular time.
+After the creation, the quadrant market as leaf - it is only the state that can be determined. In this state, the quadrant only stores the shapes until it reaches
+the shapes limit. After splitting into a subtree, the quadrant can no longer become a leaf again.
+But any quadrant is always able to store shapes that it describes. If the shape fits completely into the bounds of a quadrants's quarter,
+the shape is always indexed by a quarter. And only if the shape does not fit into single quarter, it is indexed by the quadrant itself.
 
 Quads and shapes are controlled by providers. Providers in this prototype don't have the goal of efficient memory usage.
 Providers here gives only interface. But the behavior of any provider can be changed to more efficient.
@@ -63,12 +65,12 @@ Any owned shape can be moved at any time by calling `Demo::QuadTree::Shape::SetB
 bounds and shape will be re-indexed. Once the shape goes out of indexing bounds, entire tree is reset and the indexing bounds is recalculated.
 
 
-Internally each shape describes four points of type `Demo::QuadTree::Acquire::Point` according to the number of corners of the shape bounds.
-Each point refers back to a shape. It allows to refer to shape from point. Only points of shapes are indexed in the tree. 
-It makes possible to uniquely determine the quadrant where the point is placed. In this case only one strategy may be used - indexing in the leaves of the tree.
+The `Demo::Spatial::Internal::IndexTree` class implements an index tree. The functionality of this class is used by a quadtree.
+The `IndexTree` itself only controls the consistency of the tree, not the consistency of the data indexed. Reseting, rebuilding, and defining the index bounds
+should be done by user - i.e. `QuadTree`.
+Inside the `IndexTree` all shapes are stored in an intermediate table. This allows to quickly rebuild the index on demand.
 
-All points of all shapes are stored in the intermediate table of tree. It allows to work only with points of owned shapes.
-On the search request, the index tree is being built. At this moment all known points are indexed.
+On the search request, the index tree is being built. At this moment all known shapes are indexed.
 After the tree is built, for each new shape is owned inside of indexing bounds, the tree remains built and only points of new shape are indexed.
 After the tree is built, each time the shape is not owned more, only points of such shape removed from indexing safely, the tree remains built.
 
